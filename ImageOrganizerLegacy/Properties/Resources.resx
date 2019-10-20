@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Summary_DirectoriesDeleted" xml:space="preserve">
+    <value>Directories deleted</value>
+  </data>
+  <data name="Operation_Merging" xml:space="preserve">
+    <value>Merging directories</value>
+  </data>
+  <data name="View_ProgressBeginning" xml:space="preserve">
+    <value>[</value>
+  </data>
+  <data name="Info_ImageRotated" xml:space="preserve">
+    <value>Image rotated from {0}.</value>
+  </data>
+  <data name="Warning_FailedToProcessFile" xml:space="preserve">
+    <value>Failed to process file: {0}.
+{1}</value>
+  </data>
+  <data name="View_ImageRotation" xml:space="preserve">
+    <value>Image rotation</value>
+  </data>
+  <data name="Warning_FailedToStartPreviewDueToInvalidFirstImage" xml:space="preserve">
+    <value>Failed to start preview. Could not find image: {0}.</value>
+  </data>
+  <data name="TemporaryFileNameFormat" xml:space="preserve">
+    <value>TMP_{0}{1}</value>
+  </data>
+  <data name="Info_ImageDirectoryMergerInitialized" xml:space="preserve">
+    <value>Image Directory Merger initialized.</value>
+  </data>
+  <data name="Warning_FailedToRetrieveCreationDate" xml:space="preserve">
+    <value>Failed to retrieve image creation date.</value>
+  </data>
+  <data name="Summary_FileNameConflictsResolved" xml:space="preserve">
+    <value>Name conflicts resolved</value>
+  </data>
+  <data name="View_ProgressChunk" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Error_InvalidOutputDirectory" xml:space="preserve">
+    <value>Output directory not specified or invalid. Use -o switch to select the output directory.</value>
+  </data>
+  <data name="Summary_SubDirectoriesCreated" xml:space="preserve">
+    <value>Directories created</value>
+  </data>
+  <data name="View_Operation" xml:space="preserve">
+    <value>Operation: {0}</value>
+  </data>
+  <data name="View_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Error_InvalidInputDirectory" xml:space="preserve">
+    <value>Input directory not specified or invalid. Use -s switch to select the input directory.</value>
+  </data>
+  <data name="Error_InputDirectoryNotFound" xml:space="preserve">
+    <value>Input directory not found.</value>
+  </data>
+  <data name="Error_InvalidDirectoriesList" xml:space="preserve">
+    <value>Input directories not specified or invalid. Use -m switch to select the input directories.</value>
+  </data>
+  <data name="Summary_ImagesRotated" xml:space="preserve">
+    <value>Images rotated</value>
+  </data>
+  <data name="Info_SortingDirectory" xml:space="preserve">
+    <value>Sorting images in {0}.</value>
+  </data>
+  <data name="View_MoreInputDirectories" xml:space="preserve">
+    <value> and {0} more...</value>
+  </data>
+  <data name="View_True" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="View_None" xml:space="preserve">
+    <value>&lt;none&gt;</value>
+  </data>
+  <data name="View_ProgressEnd" xml:space="preserve">
+    <value>]</value>
+  </data>
+  <data name="Operation_Sorting" xml:space="preserve">
+    <value>Sorting images</value>
+  </data>
+  <data name="Application_PressAnyKeyToExit" xml:space="preserve">
+    <value>
+
+Press any key to continue...</value>
+  </data>
+  <data name="Warning_FailedToRetrieveOrientation" xml:space="preserve">
+    <value>Failed to retrieve image orientation.</value>
+  </data>
+  <data name="View_Clean" xml:space="preserve">
+    <value>Clean</value>
+  </data>
+  <data name="View_False" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="View_Verbose" xml:space="preserve">
+    <value>Verbose</value>
+  </data>
+  <data name="Info_ImageSorterInitialized" xml:space="preserve">
+    <value>Image Sorter initialized.</value>
+  </data>
+  <data name="View_Progress" xml:space="preserve">
+    <value>{0}%    </value>
+  </data>
+  <data name="Warning_NoCommandLineArgs" xml:space="preserve">
+    <value>No command line arguments specified. See /? for help.
+Do you want to proceed with image sorting in the current working directory? 
+[Y]es or [N]o: </value>
+  </data>
+  <data name="Warning_DeletingNonEmptyDirectory" xml:space="preserve">
+    <value>The directory {0} is not empty. Delete?
+ y - yes
+ n - no
+ ya - yes to all
+ na - no to all
+
+Response: </value>
+  </data>
+  <data name="Info_MovingFile" xml:space="preserve">
+    <value>{0} -&gt; {1}</value>
+  </data>
+  <data name="Info_LaunchingPreview" xml:space="preserve">
+    <value>Launching preview...</value>
+  </data>
+  <data name="View_InputDirectory" xml:space="preserve">
+    <value>Input: {0}</value>
+  </data>
+  <data name="View_NotApplicable" xml:space="preserve">
+    <value>n/a</value>
+  </data>
+  <data name="Warning_FailedToStartPreviewDueToInvalidOutputDirectory" xml:space="preserve">
+    <value>Failed to start preview. Could not find directory: {0}.</value>
+  </data>
+  <data name="Application_HelpText" xml:space="preserve">
+    <value>Image Organizer - sorts images by date and merges image directories.
+
+Available switches:
+-?
+   help, displays this text.
+-s &lt;dir&gt;
+   sort image directory - default option.
+-m &lt;dir_1&gt; &lt;dir_2&gt; ... &lt;dir_n&gt;
+   merge image directories.
+-o
+   output directory for sort or merge options.
+-nr
+   no rotation (sorting only), disoriented images will be left intact (images are rotated by default).
+-p
+   name pattern for the output files (without extension), 
+      [C] in the name pattern will be replaced with an auto-incrementing number.
+-c
+   clean (delete) source directories after merge operation,
+      user will be asked for consent to delete not empty directories.
+-np
+   no preview, 
+      when merging - image preview application will not be launched.
+      when sorting - operating system output directory will not be shown
+-v
+   verbose logging to the console.
+</value>
+  </data>
+  <data name="Application_Title" xml:space="preserve">
+    <value>Image Organizer - sorts images by date and merges image directories.</value>
+  </data>
+  <data name="Info_ProcessingFile" xml:space="preserve">
+    <value>Processing file: {0}.</value>
+  </data>
+  <data name="Info_CleaningSourceDirectories" xml:space="preserve">
+    <value>Cleaning source directories...</value>
+  </data>
+  <data name="Summary_DirectoriesProcessed" xml:space="preserve">
+    <value>Directories processed</value>
+  </data>
+  <data name="View_OutputDirectory" xml:space="preserve">
+    <value>Output: {0}</value>
+  </data>
+  <data name="Info_ProcessingDirectory" xml:space="preserve">
+    <value>Processing directory {0}.</value>
+  </data>
+  <data name="Summary_Errors" xml:space="preserve">
+    <value>Errors</value>
+  </data>
+  <data name="Application_Started" xml:space="preserve">
+    <value>Starting application...</value>
+  </data>
+  <data name="Info_DirectorySorted" xml:space="preserve">
+    <value>Directory {0} sorted successfully.</value>
+  </data>
+  <data name="View_SummaryTitle" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Summary_FilesProcessed" xml:space="preserve">
+    <value>Files processed</value>
+  </data>
+  <data name="Summary_OperationDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="View_ItemValueString" xml:space="preserve">
+    <value>: {0}</value>
+  </data>
+</root>
