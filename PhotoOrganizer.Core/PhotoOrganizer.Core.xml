@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PhotoOrganizer.Core</name>
+    </assembly>
+    <members>
+        <member name="T:PhotoOrganizer.Core.Imaging.IImage">
+            <summary>
+            Abstraction of the <see cref="T:System.Drawing.Image"/>. 
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImage.GetMetadata(System.Int32)">
+            <summary>
+            Gets the image metadata item.
+            </summary>
+            <param name="id">The metadata identifier.</param>
+            <returns>The metadata value (byte array)</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImage.GetMetadata(PhotoOrganizer.Core.Imaging.ImageMetadataType)">
+            <summary>
+            Gets the image metadata item.
+            </summary>
+            <param name="type">The metadata type.</param>
+            <returns>The metadata value (byte array)</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImage.Save(System.String,System.Drawing.Imaging.ImageCodecInfo,System.Drawing.Imaging.EncoderParameters)">
+            <summary>
+            Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
+            </summary>
+            <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>
+            <param name="codec">The System.Drawing.Imaging.ImageCodecInfo for this System.Drawing.Image.</param>
+            <param name="parameters">An System.Drawing.Imaging.EncoderParameters to use for this System.Drawing.Image.</param>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.IImageFactory">
+            <summary>
+            Factory for <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> instance.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImageFactory.OpenImage(System.String)">
+            <summary>
+            Opens an image and wraps it in an <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> object.
+            </summary>
+            <param name="imagePath">The image path.</param>
+            <returns>An instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> class.</returns>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser">
+            <summary>
+            Retrieves the orientation of a <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/>.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImageMetadataParser.GetOrientation(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the orientation of a <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/>.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>One of the <see cref="T:PhotoOrganizer.Core.Imaging.ImageOrientation"/> values.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImageMetadataParser.GetDateTimeTaken(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time the image was taken.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>Date and time the image was taken.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImageMetadataParser.GetDateTimeOriginal(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time when the image was originally created.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>Date and time the image was originally take.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImageMetadataParser.GetDateTimeDigitized(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time the image was digitized.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>Date and time the image was digitized.</returns>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.ImageFactory">
+            <summary>
+            Factory for the <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> instances.
+            </summary>
+            <seealso cref="T:PhotoOrganizer.Core.Imaging.IImageFactory" />
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageFactory.OpenImage(System.String)">
+            <summary>
+            Opens an image and wraps it in an <see cref="T:PhotoOrganizer.Core.Imaging.IImage" /> object.
+            </summary>
+            <param name="imagePath">The image path.</param>
+            <returns>
+            An instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImage" /> class.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.ImageMetadataParser">
+            <summary>
+            The image orientation detector implementation.
+            </summary>
+            <seealso cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser" />
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageMetadataParser.GetOrientation(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the orientation of a <see cref="T:PhotoOrganizer.Core.Imaging.IImage" />.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>
+            One of the <see cref="T:PhotoOrganizer.Core.Imaging.ImageOrientation" /> values.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageMetadataParser.GetDateTimeTaken(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time the image was taken.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>
+            Date and time the image was taken.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageMetadataParser.GetDateTimeDigitized(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time the image was digitized.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>
+            Date and time the image was digitized.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageMetadataParser.GetDateTimeOriginal(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the date time when the image was originally created.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>
+            Date and time the image was originally take.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageMetadataParser.GetDateTimeToken(PhotoOrganizer.Core.Imaging.IImage,PhotoOrganizer.Core.Imaging.ImageMetadataType)">
+            <summary>
+            Gets a datetime metadata value.
+            </summary>
+            <param name="image">The <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> instance.</param>
+            <param name="token">The <see cref="T:PhotoOrganizer.Core.Imaging.ImageMetadataType"/> value.</param>
+            <returns>The date-time instance.</returns>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.ImageMetadataType">
+            <summary>
+            Image metadata type enumeration
+            More info: https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-constant-property-tags-in-alphabetical-order
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageMetadataType.Orientation">
+            <summary>
+            Image orientation viewed in terms of rows and columns.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageMetadataType.DateTime">
+            <summary>
+            Date and time the image was created.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageMetadataType.DateTimeOriginal">
+            <summary>
+            Date and time when the original image data was generated.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageMetadataType.DateTimeDigitized">
+            <summary>
+            Date and time when the image was stored as digital data.
+            </summary>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.ImageOrientation">
+            <summary>
+            Describes the orientation of an image.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.TopLeft">
+            <summary>
+            The (0,0) point is at the top left.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.TopRight">
+            <summary>
+            The (0,0) point is at the top right.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.BottomRight">
+            <summary>
+            The (0,0) point is at the bottom right.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.BottomLeft">
+            <summary>
+            The (0,0) point is at the bottom left.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.LeftTop">
+            <summary>
+            The (0,0) point is at the left top.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.RightTop">
+            <summary>
+            The (0,0) point is at the right top.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.RightBottom">
+            <summary>
+            The (0,0) point is at the right bottom.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageOrientation.LeftBottom">
+            <summary>
+            The (0,0) point is at the left bottom.
+            </summary>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Imaging.ImageWrapper">
+            <summary>
+            The wrapper for the <see cref="T:System.Drawing.Image"/>
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.wrappee">
+            <summary>
+            The <see cref="T:System.Drawing.Image"/> wrappee.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.#ctor(System.Drawing.Image)">
+            <summary>
+            Creates an instance of the <see cref="T:PhotoOrganizer.Core.Imaging.ImageWrapper"/>.
+            </summary>
+            <param name="wrappee">The <see cref="T:System.Drawing.Image"/> wrappee.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.GetMetadata(System.Int32)">
+            <summary>
+            Gets the image metadata item.
+            </summary>
+            <param name="id">The metadata identifier.</param>
+            <returns>The metadata value (byte array)</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.GetMetadata(PhotoOrganizer.Core.Imaging.ImageMetadataType)">
+            <summary>
+            Gets the image metadata item.
+            </summary>
+            <param name="type">The metadata type.</param>
+            <returns>The metadata value (byte array)</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.Save(System.String,System.Drawing.Imaging.ImageCodecInfo,System.Drawing.Imaging.EncoderParameters)">
+            <summary>
+            Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
+            </summary>
+            <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>
+            <param name="codec">The System.Drawing.Imaging.ImageCodecInfo for this System.Drawing.Image.</param>
+            <param name="parameters">An System.Drawing.Imaging.EncoderParameters to use for this System.Drawing.Image.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.Dispose">
+            <summary>
+            Disposes the underlying <see cref="T:System.Drawing.Image"/> wrappee.
+            </summary>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Manipulators.IImageRotator">
+            <summary>
+            The image rotator interface.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.Rotate(System.String)">
+            <summary>
+            Rotates the image.
+            </summary>
+            <param name="imagePath">The image path.</param>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Manipulators.ImageRotator">
+            <summary>
+            Image rotation implementation.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Manipulators.ImageRotator.imageMetadataParser">
+            <summary>
+            The image metadata parser
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.#ctor(PhotoOrganizer.Core.Imaging.IImageMetadataParser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PhotoOrganizer.Core.Manipulators.ImageRotator"/> class.
+            </summary>
+            <param name="imageMetadataParser">The image metadata parser.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.Rotate(System.String)">
+            <summary>
+            Rotates the image.
+            </summary>
+            <param name="imagePath">The image path.</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+    </members>
+</doc>
