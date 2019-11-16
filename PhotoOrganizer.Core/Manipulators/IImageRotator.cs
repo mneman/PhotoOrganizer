@@ -1,4 +1,6 @@
-﻿namespace PhotoOrganizer.Core.Manipulators
+﻿using System.Drawing.Imaging;
+
+namespace PhotoOrganizer.Core.Manipulators
 {
     /// <summary>
     /// The image rotator interface.
@@ -6,9 +8,10 @@
     public interface IImageRotator
     {
         /// <summary>
-        /// Rotates the image.
+        /// Gets image transformation <see cref="EncoderParameters"/> for the image rotation.
         /// </summary>
         /// <param name="imagePath">The image path.</param>
-        void Rotate(string imagePath);
+        /// <returns>An array of <see cref="EncoderParameters"/> for the rotation of the image.</returns>
+        EncoderParameters GetRotationParameters(string imagePath);
     }
 }

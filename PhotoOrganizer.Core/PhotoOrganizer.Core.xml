@@ -265,34 +265,41 @@
             The image rotator interface.
             </summary>
         </member>
-        <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.Rotate(System.String)">
+        <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.GetRotationParameters(System.String)">
             <summary>
-            Rotates the image.
+            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
             </summary>
             <param name="imagePath">The image path.</param>
+            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
         </member>
         <member name="T:PhotoOrganizer.Core.Manipulators.ImageRotator">
             <summary>
             Image rotation implementation.
             </summary>
         </member>
-        <member name="F:PhotoOrganizer.Core.Manipulators.ImageRotator.imageMetadataParser">
+        <member name="F:PhotoOrganizer.Core.Manipulators.ImageRotator.imageFactory">
             <summary>
-            The image metadata parser
+            The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.
             </summary>
         </member>
-        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.#ctor(PhotoOrganizer.Core.Imaging.IImageMetadataParser)">
+        <member name="F:PhotoOrganizer.Core.Manipulators.ImageRotator.imageMetadataParser">
+            <summary>
+            The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser"/>.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.#ctor(PhotoOrganizer.Core.Imaging.IImageFactory,PhotoOrganizer.Core.Imaging.IImageMetadataParser)">
             <summary>
             Initializes a new instance of the <see cref="T:PhotoOrganizer.Core.Manipulators.ImageRotator"/> class.
             </summary>
-            <param name="imageMetadataParser">The image metadata parser.</param>
+            <param name="imageFactory">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.</param>
+            <param name="imageMetadataParser">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser"/>.</param>
         </member>
-        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.Rotate(System.String)">
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.GetRotationParameters(System.String)">
             <summary>
-            Rotates the image.
+            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
             </summary>
             <param name="imagePath">The image path.</param>
-            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
         </member>
     </members>
 </doc>
