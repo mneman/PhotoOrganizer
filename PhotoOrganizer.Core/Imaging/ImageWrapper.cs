@@ -46,6 +46,32 @@ namespace PhotoOrganizer.Core.Imaging
         }
 
         /// <summary>
+        /// Sets the image metadata item.
+        /// </summary>
+        /// <param name="id">The metadata identifier.</param>
+        /// <param name="value">The metadat bytes.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SetMetadata(int id, byte[] value)
+        {
+            var item = this.wrappee.PropertyItems.FirstOrDefault(item => item.Id == id);
+            if (item != null)
+            {
+                item.Value = value;
+                this.wrappee.SetPropertyItem(item);
+            }
+        }
+
+        /// <summary>
+        /// Sets the image metadata item.
+        /// </summary>
+        /// <param name="type">The metadata type.</param>
+        /// <param name="value">The metadat bytes.</param>
+        public void SetMetadata(ImageMetadataType type, byte[] value)
+        {
+            this.SetMetadata((int)type, value);
+        }
+
+        /// <summary>
         /// Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
         /// </summary>
         /// <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>

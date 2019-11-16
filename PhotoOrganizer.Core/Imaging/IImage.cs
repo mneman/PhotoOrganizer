@@ -23,6 +23,20 @@ namespace PhotoOrganizer.Core.Imaging
         byte[] GetMetadata(ImageMetadataType type);
 
         /// <summary>
+        /// Sets the image metadata item.
+        /// </summary>
+        /// <param name="id">The metadata identifier.</param>
+        /// <param name="value">The metadat bytes.</param>
+        void SetMetadata(int id, byte[] value);
+
+        /// <summary>
+        /// Sets the image metadata item.
+        /// </summary>
+        /// <param name="type">The metadata type.</param>
+        /// <param name="value">The metadat bytes.</param>
+        void SetMetadata(ImageMetadataType type, byte[] value);
+
+        /// <summary>
         /// Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
         /// </summary>
         /// <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>

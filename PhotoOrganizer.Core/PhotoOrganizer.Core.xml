@@ -4,6 +4,69 @@
         <name>PhotoOrganizer.Core</name>
     </assembly>
     <members>
+        <member name="T:PhotoOrganizer.Core.ImageSorters.DirectorySorter">
+            <summary>
+            Image directory sorter default implementation.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.options">
+            <summary>
+            The instance of <see cref="T:PhotoOrganizer.Core.Options"/>.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.imageRotator">
+            <summary>
+            The instance of <see cref="T:PhotoOrganizer.Core.Manipulators.IImageRotator"/>.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.imageFactory">
+            <summary>
+            The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.imageMetadataParser">
+            <summary>
+            The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser"/>.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.fileSystem">
+            <summary>
+            The instance of the <see cref="T:PhotoOrganizer.Core.Utilities.IFileSystem"/>.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.#ctor(PhotoOrganizer.Core.Options,PhotoOrganizer.Core.Manipulators.IImageRotator,PhotoOrganizer.Core.Imaging.IImageFactory,PhotoOrganizer.Core.Imaging.IImageMetadataParser,PhotoOrganizer.Core.Utilities.IFileSystem)">
+            <summary>
+            Initializes a new instance of <see cref="T:PhotoOrganizer.Core.ImageSorters.DirectorySorter"/>.
+            </summary>
+            <param name="options">The instance of <see cref="T:PhotoOrganizer.Core.Options"/>.</param>
+            <param name="imageRotator">The instance of <see cref="T:PhotoOrganizer.Core.Manipulators.IImageRotator"/>.</param>
+            <param name="imageFactory">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.</param>
+            <param name="imageMetadataParser">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataParser"/>.</param>
+            <param name="fileSystem">The instance of <see cref="T:PhotoOrganizer.Core.Utilities.IFileSystem"/>.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.SortDirectory(System.String)">
+            <summary>
+            Sorts the images inside a directory.
+            </summary>
+            <param name="path">The directory to sort.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.ProcessImage(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Processes an image.
+            </summary>
+            <param name="image">The image to process.</param>
+        </member>
+        <member name="T:PhotoOrganizer.Core.ImageSorters.IDirectorySorter">
+            <summary>
+            Image directory sorter interface.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.ImageSorters.IDirectorySorter.SortDirectory(System.String)">
+            <summary>
+            Sorts the images inside a directory.
+            </summary>
+            <param name="path">The directory to sort.</param>
+        </member>
         <member name="T:PhotoOrganizer.Core.Imaging.IImage">
             <summary>
             Abstraction of the <see cref="T:System.Drawing.Image"/>. 
@@ -22,6 +85,20 @@
             </summary>
             <param name="type">The metadata type.</param>
             <returns>The metadata value (byte array)</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImage.SetMetadata(System.Int32,System.Byte[])">
+            <summary>
+            Sets the image metadata item.
+            </summary>
+            <param name="id">The metadata identifier.</param>
+            <param name="value">The metadat bytes.</param>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.IImage.SetMetadata(PhotoOrganizer.Core.Imaging.ImageMetadataType,System.Byte[])">
+            <summary>
+            Sets the image metadata item.
+            </summary>
+            <param name="type">The metadata type.</param>
+            <param name="value">The metadat bytes.</param>
         </member>
         <member name="M:PhotoOrganizer.Core.Imaging.IImage.Save(System.String,System.Drawing.Imaging.ImageCodecInfo,System.Drawing.Imaging.EncoderParameters)">
             <summary>
@@ -247,6 +324,21 @@
             <param name="type">The metadata type.</param>
             <returns>The metadata value (byte array)</returns>
         </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.SetMetadata(System.Int32,System.Byte[])">
+            <summary>
+            Sets the image metadata item.
+            </summary>
+            <param name="id">The metadata identifier.</param>
+            <param name="value">The metadat bytes.</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.SetMetadata(PhotoOrganizer.Core.Imaging.ImageMetadataType,System.Byte[])">
+            <summary>
+            Sets the image metadata item.
+            </summary>
+            <param name="type">The metadata type.</param>
+            <param name="value">The metadat bytes.</param>
+        </member>
         <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.Save(System.String,System.Drawing.Imaging.ImageCodecInfo,System.Drawing.Imaging.EncoderParameters)">
             <summary>
             Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
@@ -270,6 +362,13 @@
             Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
             </summary>
             <param name="imagePath">The image path.</param>
+            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.GetRotationParameters(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
+            </summary>
+            <param name="image">The <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> instace.</param>
             <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
         </member>
         <member name="T:PhotoOrganizer.Core.Manipulators.ImageRotator">
@@ -300,6 +399,91 @@
             </summary>
             <param name="imagePath">The image path.</param>
             <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.GetRotationParameters(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters" /> for the image rotation.
+            </summary>
+            <param name="image">The <see cref="T:PhotoOrganizer.Core.Imaging.IImage" /> instace.</param>
+            <returns>
+            An array of <see cref="T:System.Drawing.Imaging.EncoderParameters" /> for the rotation of the image.
+            </returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.GetRotationParametersInternal(PhotoOrganizer.Core.Imaging.IImage)">
+            <summary>
+            Gets the rotation parameters.
+            </summary>
+            <param name="image">The image.</param>
+            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters" /> for the rotation of the image.</returns>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Options">
+            <summary>
+            The imag-processing options.
+            </summary>
+        </member>
+        <member name="P:PhotoOrganizer.Core.Options.Rotate">
+            <summary>
+            Gets a value indicating whether to rotate images.
+            </summary>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Utilities.FileSystem">
+            <summary>
+            File system utilities.
+            </summary>
+            <seealso cref="T:PhotoOrganizer.Core.Utilities.IFileSystem" />
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.FileSystem.DirectoryExists(System.String)">
+            <summary>
+            Checks whether the directory exists.
+            </summary>
+            <param name="path">The path to check.</param>
+            <returns>
+              <c>true</c> if the directory exists; <c>false</c> otherwise.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.FileSystem.EnumerateFiles(System.String,System.String)">
+            <summary>
+            Enumerates the files in the directory.
+            </summary>
+            <param name="path">The directory path.</param>
+            <param name="searchPattern">The file search pattern.</param>
+            <returns>
+            The files from the directory.
+            </returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.FileSystem.CreateDirectorySafe(System.String)">
+            <summary>
+            Creates a directory if to does not exist.
+            </summary>
+            <param name="path">The directory path.</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:PhotoOrganizer.Core.Utilities.IFileSystem">
+            <summary>
+            File system utilities.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.IFileSystem.DirectoryExists(System.String)">
+            <summary>
+            Checks whether the directory exists.
+            </summary>
+            <param name="path">The path to check.</param>
+            <returns><c>true</c> if the directory exists; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.IFileSystem.EnumerateFiles(System.String,System.String)">
+            <summary>
+            Enumerates the files in the directory.
+            </summary>
+            <param name="path">The directory path.</param>
+            <param name="searchPattern">The file search pattern.</param>
+            <returns>The files from the directory.</returns>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Utilities.IFileSystem.CreateDirectorySafe(System.String)">
+            <summary>
+            Creates a directory if to does not exist.
+            </summary>
+            <param name="path">The directory path.</param>
         </member>
     </members>
 </doc>

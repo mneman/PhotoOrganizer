@@ -106,6 +106,33 @@ namespace PhotoOrganizer.Core.Manipulators
             }
 
             var image = this.imageFactory.OpenImage(imagePath);
+            return this.GetRotationParametersInternal(image);
+        }
+
+        /// <summary>
+        /// Gets image transformation <see cref="EncoderParameters" /> for the image rotation.
+        /// </summary>
+        /// <param name="image">The <see cref="IImage" /> instace.</param>
+        /// <returns>
+        /// An array of <see cref="EncoderParameters" /> for the rotation of the image.
+        /// </returns>
+        public EncoderParameters GetRotationParameters(IImage image)
+        {
+            if (image == null)
+            {
+                throw new ArgumentException(nameof(image));
+            }
+
+            return this.GetRotationParametersInternal(image);
+        }
+
+        /// <summary>
+        /// Gets the rotation parameters.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <returns>An array of <see cref="EncoderParameters" /> for the rotation of the image.</returns>
+        private EncoderParameters GetRotationParametersInternal(IImage image)
+        {
             var orientation = this.imageMetadataParser.GetOrientation(image);
 
             if (orientation == ImageOrientation.TopLeft)
