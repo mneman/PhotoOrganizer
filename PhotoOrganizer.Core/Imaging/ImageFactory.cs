@@ -9,8 +9,16 @@ namespace PhotoOrganizer.Core.Imaging
     /// </summary>
     /// <seealso cref="PhotoOrganizer.Core.Imaging.IImageFactory" />
     [Export(typeof(IImageFactory))]
-    public sealed class ImageFactory : IImageFactory
+    internal sealed class ImageFactory : IImageFactory
     {
+        private readonly IImageMetadataConverter imageMetadataParser;
+
+        [ImportingConstructor]
+        public ImageFactory(IImageMetadataConverter imageMetadataParser)
+        {
+            this.imageMetadataParser = imageMetadataParser;
+        }
+
         /// <summary>
         /// Opens an image and wraps it in an <see cref="IImage" /> object.
         /// </summary>
@@ -21,7 +29,7 @@ namespace PhotoOrganizer.Core.Imaging
         /// <exception cref="NotImplementedException"></exception>
         public IImage OpenImage(string imagePath)
         {
-            return new ImageWrapper(Image.FromFile(imagePath));
+            return new ImageWrapper(Image.FromFile(imagePath), this.imageMetadataParser);
         }
     }
 }

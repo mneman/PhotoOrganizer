@@ -9,6 +9,7 @@
         /// Sorts the images inside a directory.
         /// </summary>
         /// <param name="path">The directory to sort.</param>
-        void SortDirectory(string path);
+        /// <param name="options">The <see cref="Options"/> for processing.</param>
+        void SortDirectory(string path, Options options);
     }
 }

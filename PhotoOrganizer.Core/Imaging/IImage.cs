@@ -9,35 +9,32 @@ namespace PhotoOrganizer.Core.Imaging
     public interface IImage : IDisposable
     {
         /// <summary>
-        /// Gets the image metadata item.
+        /// Gets or sets the image orientation.
         /// </summary>
-        /// <param name="id">The metadata identifier.</param>
-        /// <returns>The metadata value (byte array)</returns>
-        byte[] GetMetadata(int id);
+        ImageOrientation Orientation { get; set; }
 
         /// <summary>
-        /// Gets the image metadata item.
+        /// Gets the date time the image was taken at. 
         /// </summary>
-        /// <param name="type">The metadata type.</param>
-        /// <returns>The metadata value (byte array)</returns>
-        byte[] GetMetadata(ImageMetadataType type);
+        DateTime? DateTimeTaken { get; }
 
         /// <summary>
-        /// Sets the image metadata item.
+        /// Gets the date time when the image was originally created at.
         /// </summary>
-        /// <param name="id">The metadata identifier.</param>
-        /// <param name="value">The metadat bytes.</param>
-        void SetMetadata(int id, byte[] value);
+        DateTime? DateTimeOriginal { get; }
 
         /// <summary>
-        /// Sets the image metadata item.
+        /// Gets the date time the image was digitized at.
         /// </summary>
-        /// <param name="type">The metadata type.</param>
-        /// <param name="value">The metadat bytes.</param>
-        void SetMetadata(ImageMetadataType type, byte[] value);
+        DateTime? DateTimeDigitized { get; }
 
         /// <summary>
-        /// Saves this System.Drawing.Image to the specified file, with the specified encoder and image-encoder parameters.
+        /// Gets the MIME type of the image.
+        /// </summary>
+        string MimeType { get; }
+
+        /// <summary>
+        /// Saves this <see cref="System.Drawing.Image"/> to the specified file, with the specified encoder and image-encoder parameters.
         /// </summary>
         /// <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>
         /// <param name="codec">The System.Drawing.Imaging.ImageCodecInfo for this System.Drawing.Image.</param>

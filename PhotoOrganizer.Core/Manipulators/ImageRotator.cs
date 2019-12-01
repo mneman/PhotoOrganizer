@@ -17,11 +17,6 @@ namespace PhotoOrganizer.Core.Manipulators
         /// </summary>
         private readonly IImageFactory imageFactory;
 
-        /// <summary>
-        /// The instance of <see cref="IImageMetadataParser"/>.
-        /// </summary>
-        private readonly IImageMetadataParser imageMetadataParser;
-
         private readonly IDictionary<ImageOrientation, IList<EncoderValue>> RotationMap = new Dictionary<ImageOrientation, IList<EncoderValue>>()
         {
             {
@@ -85,12 +80,10 @@ namespace PhotoOrganizer.Core.Manipulators
         /// Initializes a new instance of the <see cref="ImageRotator"/> class.
         /// </summary>
         /// <param name="imageFactory">The instance of <see cref="IImageFactory"/>.</param>
-        /// <param name="imageMetadataParser">The instance of <see cref="IImageMetadataParser"/>.</param>
         [ImportingConstructor]
-        public ImageRotator(IImageFactory imageFactory, IImageMetadataParser imageMetadataParser)
+        public ImageRotator(IImageFactory imageFactory)
         {
             this.imageFactory = imageFactory;
-            this.imageMetadataParser = imageMetadataParser;
         }
 
         /// <summary>
@@ -133,7 +126,7 @@ namespace PhotoOrganizer.Core.Manipulators
         /// <returns>An array of <see cref="EncoderParameters" /> for the rotation of the image.</returns>
         private EncoderParameters GetRotationParametersInternal(IImage image)
         {
-            var orientation = this.imageMetadataParser.GetOrientation(image);
+            var orientation = image.Orientation;
 
             if (orientation == ImageOrientation.TopLeft)
             {
