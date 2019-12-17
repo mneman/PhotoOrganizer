@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace PhotoOrganizer.Core.Imaging
@@ -36,57 +38,20 @@ namespace PhotoOrganizer.Core.Imaging
         }
 
         /// <summary>
-        /// Gets the date time the image was taken at.
+        /// Gets a <see cref="DateTime"/> image metadata value.
         /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
-        /// <returns>
-        /// Date and time the image was taken at.
-        /// </returns>
-        public DateTime? ToDateTimeTaken(byte[] metadataBytes)
-        {
-            return this.GetDateTimeToken(metadataBytes, ImageMetadataType.DateTime);
-        }
-
-        /// <summary>
-        /// Gets the date time the image was digitized at.
-        /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
-        /// <returns>
-        /// Date and time the image was digitized. at
-        /// </returns>
-        public DateTime? ToDateTimeDigitized(byte[] metadataBytes)
-        {
-            return this.GetDateTimeToken(metadataBytes, ImageMetadataType.DateTimeDigitized);
-        }
-
-        /// <summary>
-        /// Gets the date time when the image was originally created at.
-        /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
-        /// <returns>
-        /// Date and time the image was originally taken at.
-        /// </returns>
-        public DateTime? ToDateTimeOriginal(byte[] metadataBytes)
-        {
-            return this.GetDateTimeToken(metadataBytes, ImageMetadataType.DateTimeOriginal);
-        }
-
-        /// <summary>
-        /// Gets a datetime metadata value.
-        /// </summary>
-        /// <param name="dtBytes">The <see cref="IImage"/> instance.</param>
-        /// <param name="token">The <see cref="ImageMetadataType"/> value.</param>
+        /// <param name="metadataBytes">The <see cref="IImage"/> instance.</param>
         /// <returns>The date-time instance.</returns>
-        private DateTime? GetDateTimeToken(byte[] dtBytes, ImageMetadataType token)
+        public DateTime? ToDateTime(byte[] metadataBytes)
         {
-            if (dtBytes == null || dtBytes.Length == 0)
+            if (metadataBytes == null || metadataBytes.Length == 0)
             {
                 return null;
             }
 
             try
             {
-                var dtString = Encoding.ASCII.GetString(dtBytes, 0, dtBytes.Length);
+                var dtString = Encoding.ASCII.GetString(metadataBytes, 0, metadataBytes.Length);
                 return DateTime.ParseExact(dtString, "yyyy:MM:d H:m:s", CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
@@ -94,6 +59,23 @@ namespace PhotoOrganizer.Core.Imaging
                 Console.WriteLine(ex.ToString());
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Gets a mime-type based on the <see cref="Guid"/> representing image raw format.
+        /// </summary>
+        /// <param name="rawFormat">The raw format <see cref="Guid"/>.</param>
+        /// <returns>Image mime-type.</returns>
+        public string ToMimeType(Guid rawFormat)
+        {
+            ImageCodecInfo codec = ImageCodecInfo.GetImageDecoders().FirstOrDefault(c => c.FormatID == rawFormat);
+
+            if (codec == null)
+            {
+                throw new NotSupportedException($"The {rawFormat} format is not supported.");
+            }
+
+            return codec.MimeType;
         }
 
         /// <summary>

@@ -40,15 +40,11 @@ namespace PhotoOrganizer.Core.Imaging
             this.metadataConverter = metadataParser;
 
             this.orientationProvider = new Lazy<ImageOrientation>(() => this.metadataConverter.ToOrientation(this.GetMetadata(ImageMetadataType.Orientation)));
-            this.dateTimeTakenProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTimeTaken(this.GetMetadata(ImageMetadataType.DateTime)));
-            this.dateTimeOriginalProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTimeOriginal(this.GetMetadata(ImageMetadataType.DateTimeOriginal)));
-            this.dateTimeDigitizedProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTimeDigitized(this.GetMetadata(ImageMetadataType.DateTimeDigitized)));
+            this.dateTimeTakenProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTime(this.GetMetadata(ImageMetadataType.DateTime)));
+            this.dateTimeOriginalProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTime(this.GetMetadata(ImageMetadataType.DateTimeOriginal)));
+            this.dateTimeDigitizedProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTime(this.GetMetadata(ImageMetadataType.DateTimeDigitized)));
 
-            this.mimeTypeProvider = new Lazy<string>(() =>
-            {
-                ImageCodecInfo codec = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == this.wrappee.RawFormat.Guid);
-                return codec.MimeType;
-            }, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+            this.mimeTypeProvider = new Lazy<string>(() => this.metadataConverter.ToMimeType(this.wrappee.RawFormat.Guid));
         }
 
         public string MimeType => this.mimeTypeProvider.Value;

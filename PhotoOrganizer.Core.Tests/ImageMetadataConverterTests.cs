@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.Linq;
 using System.Text;
-using NSubstitute;
 using NUnit.Framework;
 using PhotoOrganizer.Core.Imaging;
 
@@ -9,6 +12,8 @@ namespace PhotoOrganizer.Core.Tests
     [TestFixture]
     public sealed class ImageMetadataConverterTests
     {
+        private static IEnumerable<(Guid formatId, string mimeType)> Codecs => ImageCodecInfo.GetImageDecoders().Select(codec => (codec.FormatID, codec.MimeType));
+
         [Test]
         public void ToOrientation_MetadataBytesNullOrEmpty_ReturnsTopLeft([Values(null, new byte[] { })] byte[] emptyBytes)
         {
@@ -20,7 +25,7 @@ namespace PhotoOrganizer.Core.Tests
         }
 
         [Test]
-        public void GetOrientation_InvalidBytes_ReturnsTopLeft()
+        public void ToOrientation_InvalidBytes_ReturnsTopLeft()
         {
             // Arrange
             var parser = new ImageMetadataConverter();
@@ -40,7 +45,7 @@ namespace PhotoOrganizer.Core.Tests
         [TestCase(ImageOrientation.RightTop)]
         [TestCase(ImageOrientation.RightBottom)]
         [TestCase(ImageOrientation.LeftBottom)]
-        public void GetOrientation_ImageWithDifferentOrientationProperty_ReturnsCorrectValue(ImageOrientation expectedOrientation)
+        public void ToOrientation_ImageWithDifferentOrientationProperty_ReturnsCorrectValue(ImageOrientation expectedOrientation)
         {
             // Arrange
             var orientationByteArray = BitConverter.GetBytes((short)expectedOrientation);
@@ -55,30 +60,30 @@ namespace PhotoOrganizer.Core.Tests
         }
 
         [Test]
-        public void ToDateTimeTaken_MetadataBytesNullOrEmpty_ReturnsNull([Values(null, new byte[] { })] byte[] emptyBytes)
+        public void ToDateTime_MetadataBytesNullOrEmpty_ReturnsNull([Values(null, new byte[] { })] byte[] emptyBytes)
         {
             // Arrange
             var parser = new ImageMetadataConverter();
 
             // Act, Assert
-            Assert.IsNull(parser.ToDateTimeTaken(emptyBytes));
+            Assert.IsNull(parser.ToDateTime(emptyBytes));
         }
 
         [Test]
-        public void ToDataTimeTaken_FailsToConvertToDateTime_ReturnsNull()
+        public void ToDataTime_FailsToConvertToDateTime_ReturnsNull()
         {
             // Arrange
             var parser = new ImageMetadataConverter();
 
             // Act
-            var dt = parser.ToDateTimeTaken(new byte[] { 1 });
+            var dt = parser.ToDateTime(new byte[] { 1 });
 
             // Assert
             Assert.IsNull(dt);
         }
 
         [Test]
-        public void ToDateTimeTaken_SuccessfullyConvertsToDateTime_ReturnsDateTimeTaken()
+        public void ToDateTime_SuccessfullyConvertsToDateTime_ReturnsDateTimeTaken()
         {
             // Arrange
             var parser = new ImageMetadataConverter();
@@ -88,90 +93,65 @@ namespace PhotoOrganizer.Core.Tests
             var dtBytes = Encoding.ASCII.GetBytes(dtString);
 
             // Act
-            var dtActual = parser.ToDateTimeTaken(dtBytes);
+            var dtActual = parser.ToDateTime(dtBytes);
 
             // Assert
             Assert.AreEqual(dt, dtActual);
         }
 
-        [Test]
-        public void ToDateTimeDigitized_MetadataBytesNullOrEmpty_ThrowsArgumentNulException([Values(null, new byte[] { })] byte[] emptyBytes)
+        [TestCase(ImageOrientation.BottomLeft)]
+        [TestCase(ImageOrientation.BottomRight)]
+        [TestCase(ImageOrientation.LeftBottom)]
+        [TestCase(ImageOrientation.LeftTop)]
+        [TestCase(ImageOrientation.RightBottom)]
+        [TestCase(ImageOrientation.RightTop)]
+        [TestCase(ImageOrientation.TopLeft)]
+        [TestCase(ImageOrientation.TopRight)]
+        public void ToBytes_CalledWithImageOrientation_ReturnsBytes(ImageOrientation orientation)
         {
             // Arrange
-            var parser = new ImageMetadataConverter();
+            var expected = BitConverter.GetBytes((short)orientation);
+            var converter = new ImageMetadataConverter();
 
             // Act, Assert
-            Assert.Throws<ArgumentNullException>(() => parser.ToDateTimeDigitized(emptyBytes));
+            CollectionAssert.AreEqual(expected, converter.ToBytes(orientation));
         }
 
         [Test]
-        public void ToDataTimeDigitized_FailsToConvertToDateTime_ReturnsNull()
+        public void ToBytes_CalledWithDateTime_ReturnsBytes()
         {
             // Arrange
-            var parser = new ImageMetadataConverter();
+            var now = DateTime.Now;
+            var nowString = now.ToString("yyyy:MM:d H:m:s", CultureInfo.InvariantCulture);
+            var expected = Encoding.ASCII.GetBytes(nowString);
 
-            // Act
-            var dt = parser.ToDateTimeDigitized(new byte[] { 1 });
-
-            // Assert
-            Assert.IsNull(dt);
-        }
-
-        [Test]
-        public void GetDateTimeDigitized_SuccessfullyConvertsToDateTime_ReturnsDateTimeTaken()
-        {
-            // Arrange
-            var parser = new ImageMetadataConverter();
-
-            var dt = DateTime.Today.AddHours(9).AddMinutes(1).AddSeconds(15);
-            var dtString = dt.ToString("yyyy:MM:d H:m:s");
-            var dtBytes = Encoding.ASCII.GetBytes(dtString);
-
-            // Act
-            var dtActual = parser.ToDateTimeDigitized(dtBytes);
-
-            // Assert
-            Assert.AreEqual(dt, dtActual);
-        }
-
-        [Test]
-        public void GetDateTimeOriginal_MetadataBytesNullOrEmpty_ReturnsNull([Values(null, new byte[] { })] byte[] emptyBytes)
-        {
-            // Arrange
-            var parser = new ImageMetadataConverter();
+            var converter = new ImageMetadataConverter();
 
             // Act, Assert
-            Assert.Throws<ArgumentNullException>(() => parser.ToDateTimeOriginal(emptyBytes));
+            CollectionAssert.AreEqual(expected, converter.ToBytes(now));
+        }
+
+        [TestCaseSource("Codecs")]
+        public void ToMimeType_CalledWithValidGuid_ReturnMimeType((Guid formatId, string mimeType) codec)
+        {
+            // Arrange
+            var converter = new ImageMetadataConverter();
+
+            // Act
+            var actualMimeType = converter.ToMimeType(codec.formatId);
+
+            // Assert
+            Assert.That(actualMimeType, Is.EqualTo(codec.mimeType));
         }
 
         [Test]
-        public void GetDataTimeOriginal_FailsToConvertToDateTime_ReturnsNull()
+        public void ToMimeType_CalledWithInvalidGuid_ThrowsException()
         {
             // Arrange
-            var parser = new ImageMetadataConverter();
+            var converter = new ImageMetadataConverter();
 
-            // Act
-            var dt = parser.ToDateTimeOriginal(new byte[] { 1 });
-
-            // Assert
-            Assert.IsNull(dt);
-        }
-
-        [Test]
-        public void GetDateTimeOriginal_SuccessfullyConvertsToDateTime_ReturnsDateTimeTaken()
-        {
-            // Arrange
-            var parser = new ImageMetadataConverter();
-
-            var dt = DateTime.Today.AddHours(9).AddMinutes(1).AddSeconds(15);
-            var dtString = dt.ToString("yyyy:MM:d H:m:s");
-            var dtBytes = Encoding.ASCII.GetBytes(dtString);
-
-            // Act
-            var dtActual = parser.ToDateTimeOriginal(dtBytes);
-
-            // Assert
-            Assert.AreEqual(dt, dtActual);
+            // Act, Assert
+            Assert.That(() => converter.ToMimeType(Guid.Empty), Throws.TypeOf<NotSupportedException>());
         }
     }
 }

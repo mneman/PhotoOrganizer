@@ -17,31 +17,20 @@ namespace PhotoOrganizer.Core.Imaging
         ImageOrientation ToOrientation(byte[] metadataBytes);
 
         /// <summary>
-        /// Gets the date time the image was taken at.
+        /// Gets a <see cref="DateTime"/> image metadata value.
         /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
+        /// <param name="metadataBytes">The <see cref="IImage"/> instance.</param>
         /// <returns>
-        /// Date and time the image was taken at.
+        /// The date-time instance.
         /// </returns>
-        DateTime? ToDateTimeTaken(byte[] metadataBytes);
+        DateTime? ToDateTime(byte[] metadataBytes);
 
         /// <summary>
-        /// Gets the date time the image was digitized at.
+        /// Gets a mime-type based on the <see cref="Guid"/> representing image raw format.
         /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
-        /// <returns>
-        /// Date and time the image was digitized. at
-        /// </returns>
-        DateTime? ToDateTimeOriginal(byte[] metadataBytes);
-
-        /// <summary>
-        /// Gets the date time when the image was originally created at.
-        /// </summary>
-        /// <param name="metadataBytes">The image metadata.</param>
-        /// <returns>
-        /// Date and time the image was originally taken at.
-        /// </returns>
-        DateTime? ToDateTimeDigitized(byte[] metadataBytes);
+        /// <param name="rawFormat">The raw format <see cref="Guid"/>.</param>
+        /// <returns>Image mime-type.</returns>
+        string ToMimeType(Guid rawFormat);
 
         /// <summary>
         /// Converts <see cref="ImageOrientation"/> to metadata bytes.
