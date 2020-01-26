@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace PhotoOrganizer.Core.Utilities
@@ -9,6 +10,7 @@ namespace PhotoOrganizer.Core.Utilities
     /// </summary>
     /// <seealso cref="PhotoOrganizer.Core.Utilities.IFileSystem" />
     [Export(typeof(IFileSystem))]
+    [ExcludeFromCodeCoverage]
     internal sealed class FileSystem : IFileSystem
     {
         /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace PhotoOrganizer.Core.ImageSorters
+﻿namespace PhotoOrganizer.Core
 {
     /// <summary>
     /// Image directory sorter interface.

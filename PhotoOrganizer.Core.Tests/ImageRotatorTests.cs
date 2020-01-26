@@ -12,17 +12,6 @@ namespace PhotoOrganizer.Core.Tests
     public class ImageRotatorTests
     {
         [Test]
-        public void GetRotationParametersForImagePath_ImageNullOrWhiteSpace_ThrowsArgumentException([Values("", null, " ")]string path)
-        {
-            // Arrange
-            var factory = Fake.ImageFactory(Fake.Image());
-            var rotator = new ImageRotator(factory);
-
-            // Act, Assert
-            Assert.Throws<ArgumentException>(() => rotator.GetRotationParameters(path));
-        }
-
-        [Test]
         public void GetRotationParametersForImage_ImageNull_ThrowsArgumentException()
         {
             // Arrange
@@ -31,38 +20,6 @@ namespace PhotoOrganizer.Core.Tests
 
             // Act, Assert
             Assert.Throws<ArgumentException>(() => rotator.GetRotationParameters((IImage)null));
-        }
-
-        [Test]
-        public void GetRotationParametersForImagePath_ImagePathExists_ImageFactoryReturnsImage()
-        {
-            // Arrange
-            var imagePath = "c:\\image.jpg";
-            var image = Fake.Image();
-            var factory = Fake.ImageFactory(image);
-            var rotator = new ImageRotator(factory);
-
-            // Act
-            rotator.GetRotationParameters(imagePath);
-
-            // Assert
-            factory.Received(1).OpenImage(Arg.Is(imagePath));
-        }
-
-        [Test]
-        public void GetRotationParametersForImagePath_OrientationIsTopLeft_ReturnsNull()
-        {
-            // Arrange
-            var imagePath = "c:\\image.jpg";
-            var image = Fake.Image(ImageOrientation.TopLeft);
-            var factory = Fake.ImageFactory(image);
-            var rotator = new ImageRotator(factory);
-
-            // Act
-            var parameters = rotator.GetRotationParameters(imagePath);
-
-            // Assert
-            Assert.IsNull(parameters);
         }
 
         [Test]
@@ -78,44 +35,6 @@ namespace PhotoOrganizer.Core.Tests
 
             // Assert
             Assert.IsNull(parameters);
-        }
-
-        [TestCase(ImageOrientation.BottomLeft, new[] { EncoderValue.TransformFlipVertical })]
-        [TestCase(ImageOrientation.BottomRight, new[] { EncoderValue.TransformRotate180 })]
-        [TestCase(ImageOrientation.LeftBottom, new[] { EncoderValue.TransformRotate270 })]
-        [TestCase(ImageOrientation.LeftTop, new[] { EncoderValue.TransformRotate90, EncoderValue.TransformFlipHorizontal })]
-        [TestCase(ImageOrientation.RightBottom, new[] { EncoderValue.TransformRotate90, EncoderValue.TransformFlipVertical })]
-        [TestCase(ImageOrientation.RightTop, new[] { EncoderValue.TransformRotate90 })]
-        [TestCase(ImageOrientation.TopRight, new[] { EncoderValue.TransformFlipHorizontal })]
-        public void GetRotationParametersForImagePath_ImageMisOriented_ReturnsCorrectEncoderParameters(ImageOrientation orientation, EncoderValue[] expectedValues)
-        {
-            // Arrange
-            var imagePath = "c:\\image.jpg";
-            var image = Fake.Image(orientation);
-            var factory = Fake.ImageFactory(image);
-            var rotator = new ImageRotator(factory);
-
-            // Act
-            var parameters = rotator.GetRotationParameters(imagePath);
-
-            // Assert
-            Assert.IsNotNull(parameters);
-            Assert.AreEqual(expectedValues.Length, parameters.Param.Length);
-
-            foreach (var val in expectedValues)
-            {
-                Assert.IsTrue(parameters.Param.Any(param =>
-                {
-                    var valueField = param.GetType().GetField("_parameterValue", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    var valuePointer = (IntPtr)valueField.GetValue(param);
-                    var value = (EncoderValue)Marshal.ReadInt32(valuePointer);
-
-                    return param.Encoder.Guid == Encoder.Transformation.Guid
-                           && param.NumberOfValues == 1
-                           && param.ValueType == EncoderParameterValueType.ValueTypeLong
-                           && value == val;
-                }));
-            }
         }
 
         [TestCase(ImageOrientation.BottomLeft, new[] { EncoderValue.TransformFlipVertical })]

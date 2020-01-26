@@ -34,6 +34,11 @@ namespace PhotoOrganizer.Core.Imaging
         string MimeType { get; }
 
         /// <summary>
+        /// Gets the codec information (<see cref="ImageCodecInfo"/>).
+        /// </summary>
+        ImageCodecInfo CodecInfo { get; }
+
+        /// <summary>
         /// Saves this <see cref="System.Drawing.Image"/> to the specified file, with the specified encoder and image-encoder parameters.
         /// </summary>
         /// <param name="targetFile">A string that contains the name of the file to which to save this System.Drawing.Image.</param>

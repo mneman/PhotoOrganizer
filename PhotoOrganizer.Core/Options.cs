@@ -8,7 +8,12 @@ namespace PhotoOrganizer.Core
     /// </summary>
     public sealed class Options
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Options"/> class.
+        /// </summary>
+        /// <param name="rotate">if set to <c>true</c> [rotate].</param>
+        /// <param name="imageExtensions">The image extensions.</param>
+        /// <param name="outputDirectory">The output directory.</param>
         public Options(bool rotate, IEnumerable<string> imageExtensions, string outputDirectory)
         {
             this.Rotate = rotate;

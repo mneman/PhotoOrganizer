@@ -17,6 +17,9 @@ namespace PhotoOrganizer.Core.Manipulators
         /// </summary>
         private readonly IImageFactory imageFactory;
 
+        /// <summary>
+        /// The image rotation map
+        /// </summary>
         private readonly IDictionary<ImageOrientation, IList<EncoderValue>> RotationMap = new Dictionary<ImageOrientation, IList<EncoderValue>>()
         {
             {
@@ -84,22 +87,6 @@ namespace PhotoOrganizer.Core.Manipulators
         public ImageRotator(IImageFactory imageFactory)
         {
             this.imageFactory = imageFactory;
-        }
-
-        /// <summary>
-        /// Gets image transformation <see cref="EncoderParameters"/> for the image rotation.
-        /// </summary>
-        /// <param name="imagePath">The image path.</param>
-        /// <returns>An array of <see cref="EncoderParameters"/> for the rotation of the image.</returns>
-        public EncoderParameters GetRotationParameters(string imagePath)
-        {
-            if (string.IsNullOrWhiteSpace(imagePath))
-            {
-                throw new ArgumentException(nameof(imagePath));
-            }
-
-            var image = this.imageFactory.OpenImage(imagePath);
-            return this.GetRotationParametersInternal(image);
         }
 
         /// <summary>

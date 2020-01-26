@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
 namespace PhotoOrganizer.Core.Imaging
@@ -9,14 +10,22 @@ namespace PhotoOrganizer.Core.Imaging
     /// </summary>
     /// <seealso cref="PhotoOrganizer.Core.Imaging.IImageFactory" />
     [Export(typeof(IImageFactory))]
+    [ExcludeFromCodeCoverage]
     internal sealed class ImageFactory : IImageFactory
     {
-        private readonly IImageMetadataConverter imageMetadataParser;
+        /// <summary>
+        /// The <see cref="IImageMetadataConverter"/> instance.
+        /// </summary>
+        private readonly IImageMetadataConverter imageMetadataConverter;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageFactory"/> class.
+        /// </summary>
+        /// <param name="imageMetadataParser">The image metadata parser.</param>
         [ImportingConstructor]
         public ImageFactory(IImageMetadataConverter imageMetadataParser)
         {
-            this.imageMetadataParser = imageMetadataParser;
+            this.imageMetadataConverter = imageMetadataParser;
         }
 
         /// <summary>
@@ -29,7 +38,7 @@ namespace PhotoOrganizer.Core.Imaging
         /// <exception cref="NotImplementedException"></exception>
         public IImage OpenImage(string imagePath)
         {
-            return new ImageWrapper(Image.FromFile(imagePath), this.imageMetadataParser);
+            return new ImageWrapper(Image.FromFile(imagePath), this.imageMetadataConverter);
         }
     }
 }

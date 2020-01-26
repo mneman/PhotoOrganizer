@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -8,25 +9,47 @@ namespace PhotoOrganizer.Core.Imaging
     /// <summary>
     /// The wrapper for the <see cref="Image"/>
     /// </summary>
+    [ExcludeFromCodeCoverage]
     internal sealed class ImageWrapper : IImage
     {
         /// <summary>
         /// The <see cref="Image"/> wrappee.
         /// </summary>
         private readonly Image wrappee;
+
+        /// <summary>
+        /// The <see cref="IImageMetadataConverter"/> instance
+        /// </summary>
         private readonly IImageMetadataConverter metadataConverter;
 
         /// <summary>
-        /// The MIME type of the image.
+        /// The getter of the MIME type of the image.
         /// </summary>
         private readonly Lazy<string> mimeTypeProvider;
 
+        /// <summary>
+        /// The getter of the <see cref="ImageCodecInfo"/> of the image.
+        /// </summary>
+        private readonly Lazy<ImageCodecInfo> codecInfoProvider;
+
+        /// <summary>
+        /// The getter of the image orientation.
+        /// </summary>
         private readonly Lazy<ImageOrientation> orientationProvider;
 
+        /// <summary>
+        /// The getter of the date-time when the image was taken.
+        /// </summary>
         private readonly Lazy<DateTime?> dateTimeTakenProvider;
 
+        /// <summary>
+        /// The getter of the date-time when the image was digitized
+        /// </summary>
         private readonly Lazy<DateTime?> dateTimeDigitizedProvider;
 
+        /// <summary>
+        /// The getter of the original date-time of the image.
+        /// </summary>
         private readonly Lazy<DateTime?> dateTimeOriginalProvider;
 
         /// <summary>
@@ -34,7 +57,7 @@ namespace PhotoOrganizer.Core.Imaging
         /// </summary>
         /// <param name="wrappee">The <see cref="Image"/> wrappee.</param>
         /// <param name="metadataParser"></param>
-        public ImageWrapper(Image wrappee, IImageMetadataConverter metadataParser)
+        internal ImageWrapper(Image wrappee, IImageMetadataConverter metadataParser)
         {
             this.wrappee = wrappee;
             this.metadataConverter = metadataParser;
@@ -45,9 +68,18 @@ namespace PhotoOrganizer.Core.Imaging
             this.dateTimeDigitizedProvider = new Lazy<DateTime?>(() => this.metadataConverter.ToDateTime(this.GetMetadata(ImageMetadataType.DateTimeDigitized)));
 
             this.mimeTypeProvider = new Lazy<string>(() => this.metadataConverter.ToMimeType(this.wrappee.RawFormat.Guid));
+            this.codecInfoProvider = new Lazy<ImageCodecInfo>(() => ImageCodecInfo.GetImageEncoders().Where(encoder => encoder.MimeType == this.MimeType).FirstOrDefault());
         }
 
+        /// <summary>
+        /// Gets the image MIME type.
+        /// </summary>
         public string MimeType => this.mimeTypeProvider.Value;
+
+        /// <summary>
+        /// Gets the codec information (<see cref="ImageCodecInfo"/>).
+        /// </summary>
+        public ImageCodecInfo CodecInfo => this.codecInfoProvider.Value;
 
         /// <summary>
         /// Gets the image orientation.

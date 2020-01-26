@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Composition;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using PhotoOrganizer.Core.Imaging;
 using PhotoOrganizer.Core.Manipulators;
 using PhotoOrganizer.Core.Utilities;
 
-namespace PhotoOrganizer.Core.ImageSorters
+namespace PhotoOrganizer.Core
 {
     /// <summary>
     /// Image directory sorter default implementation.
@@ -43,6 +45,7 @@ namespace PhotoOrganizer.Core.ImageSorters
             this.imageFactory = imageFactory;
             this.fileSystem = fileSystem;
         }
+
         /// <summary>
         /// Sorts the images inside a directory.
         /// </summary>
@@ -60,9 +63,20 @@ namespace PhotoOrganizer.Core.ImageSorters
                 throw new DirectoryNotFoundException($"Directory not found: {path}");
             }
 
-            foreach (string file in this.fileSystem.EnumerateFiles(path, "*.jpg"))
-            {   
-                this.ProcessImage(file, options);
+            IList<string> datedDirectoriesWithTempFiles = this.GetDatedDirectories(path, options).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
+
+            foreach (string folder in datedDirectoriesWithTempFiles)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private IEnumerable<string> GetDatedDirectories(string path, Options options)
+        {
+            var imageFiles = options.ImageExtensions.SelectMany(ext => this.fileSystem.EnumerateFiles(path, ext));
+            foreach (string file in imageFiles)
+            {
+                yield return this.ProcessImage(file, options);
             }
         }
 
@@ -71,7 +85,7 @@ namespace PhotoOrganizer.Core.ImageSorters
         /// </summary>
         /// <param name="file">The image file to process.</param>
         /// <param name="options">The options.</param>
-        private void ProcessImage(string file, Options options)
+        private string ProcessImage(string file, Options options)
         {
             IImage image = this.imageFactory.OpenImage(file);
 
@@ -81,7 +95,7 @@ namespace PhotoOrganizer.Core.ImageSorters
                 rotationParameters = this.RotateImage(image);
             }
 
-            var tempPath = this.GetTempPath(image, Path.GetExtension(file), options.OutputDirectory);
+            return this.SaveToDatedDirectory(image, Path.GetExtension(file), options.OutputDirectory, rotationParameters);
         }
 
         private EncoderParameters RotateImage(IImage image)
@@ -98,16 +112,23 @@ namespace PhotoOrganizer.Core.ImageSorters
             return rotationParameters;
         }
 
-        private string GetTempPath(IImage image, string extension, string outputDirectory)
+        private string SaveToDatedDirectory(IImage image, string extension, string outputDirectory, EncoderParameters parameters)
         {
             DateTime? imageDate = image.DateTimeOriginal
                                   ?? image.DateTimeDigitized
                                   ?? image.DateTimeTaken
                                   ?? DateTime.Today;
 
-            string subDirectory = imageDate.Value.ToString("yyyy.MM.dd", CultureInfo.InvariantCulture);
+            string subDirectory = Path.Join(outputDirectory, imageDate.Value.ToString("yyyy.MM.dd", CultureInfo.InvariantCulture));
+            string tempFileName = $"{Guid.NewGuid()}.{extension}";
 
-            return Path.Join(outputDirectory, subDirectory, Guid.NewGuid().ToString(), extension);
+            this.fileSystem.CreateDirectorySafe(subDirectory);
+
+            var targetFile = Path.Join(subDirectory, tempFileName);
+
+            image.Save(targetFile, image.CodecInfo, parameters);
+
+            return subDirectory;
         }
     }
 }

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
-using PhotoOrganizer.Core.ImageSorters;
 using PhotoOrganizer.Core.Imaging;
 using PhotoOrganizer.Core.Manipulators;
 using PhotoOrganizer.Core.Utilities;
@@ -34,23 +33,6 @@ namespace PhotoOrganizer.Core.Tests
 
             // Act, Assert
             Assert.Throws<DirectoryNotFoundException>(() => sorter.SortDirectory(dir, Fake.Options()));
-        }
-
-        [Test]
-        public void SortDirectory_ImagesDontExist_DoesNothing()
-        {
-            // Arrange
-            var rotator = Fake.ImageRotator();
-            var factory = Fake.ImageFactory();
-            var fileSystem = Fake.FileSystem(Enumerable.Empty<string>());
-            var sorter = new DirectorySorter(rotator, factory, fileSystem);
-
-            // Act
-            sorter.SortDirectory("C:\\images", Fake.Options());
-
-            // Assert
-            rotator.Received(0).GetRotationParameters(Arg.Any<string>());
-            factory.Received(0).OpenImage(Arg.Any<string>());
         }
 
         [Test]

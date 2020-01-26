@@ -5,7 +5,7 @@ namespace PhotoOrganizer.Core.Utilities
     /// <summary>
     /// File system utilities.
     /// </summary>
-    public interface IFileSystem
+    internal interface IFileSystem
     {
         /// <summary>
         /// Checks whether the directory exists.

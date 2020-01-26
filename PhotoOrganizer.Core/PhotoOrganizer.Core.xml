@@ -4,54 +4,54 @@
         <name>PhotoOrganizer.Core</name>
     </assembly>
     <members>
-        <member name="T:PhotoOrganizer.Core.ImageSorters.DirectorySorter">
+        <member name="T:PhotoOrganizer.Core.DirectorySorter">
             <summary>
             Image directory sorter default implementation.
             </summary>
         </member>
-        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.imageRotator">
+        <member name="F:PhotoOrganizer.Core.DirectorySorter.imageRotator">
             <summary>
             The instance of <see cref="T:PhotoOrganizer.Core.Manipulators.IImageRotator"/>.
             </summary>
         </member>
-        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.imageFactory">
+        <member name="F:PhotoOrganizer.Core.DirectorySorter.imageFactory">
             <summary>
             The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.
             </summary>
         </member>
-        <member name="F:PhotoOrganizer.Core.ImageSorters.DirectorySorter.fileSystem">
+        <member name="F:PhotoOrganizer.Core.DirectorySorter.fileSystem">
             <summary>
             The instance of the <see cref="T:PhotoOrganizer.Core.Utilities.IFileSystem"/>.
             </summary>
         </member>
-        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.#ctor(PhotoOrganizer.Core.Manipulators.IImageRotator,PhotoOrganizer.Core.Imaging.IImageFactory,PhotoOrganizer.Core.Utilities.IFileSystem)">
+        <member name="M:PhotoOrganizer.Core.DirectorySorter.#ctor(PhotoOrganizer.Core.Manipulators.IImageRotator,PhotoOrganizer.Core.Imaging.IImageFactory,PhotoOrganizer.Core.Utilities.IFileSystem)">
             <summary>
-            Initializes a new instance of <see cref="T:PhotoOrganizer.Core.ImageSorters.DirectorySorter"/>.
+            Initializes a new instance of <see cref="T:PhotoOrganizer.Core.DirectorySorter"/>.
             </summary>
             <param name="imageRotator">The instance of <see cref="T:PhotoOrganizer.Core.Manipulators.IImageRotator"/>.</param>
             <param name="imageFactory">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.</param>
             <param name="fileSystem">The instance of <see cref="T:PhotoOrganizer.Core.Utilities.IFileSystem"/>.</param>
         </member>
-        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.SortDirectory(System.String,PhotoOrganizer.Core.Options)">
+        <member name="M:PhotoOrganizer.Core.DirectorySorter.SortDirectory(System.String,PhotoOrganizer.Core.Options)">
             <summary>
             Sorts the images inside a directory.
             </summary>
             <param name="path">The directory to sort.</param>
             <param name="options">The <see cref="T:PhotoOrganizer.Core.Options"/> for processing.</param>
         </member>
-        <member name="M:PhotoOrganizer.Core.ImageSorters.DirectorySorter.ProcessImage(System.String,PhotoOrganizer.Core.Options)">
+        <member name="M:PhotoOrganizer.Core.DirectorySorter.ProcessImage(System.String,PhotoOrganizer.Core.Options)">
             <summary>
             Processes an image.
             </summary>
             <param name="file">The image file to process.</param>
             <param name="options">The options.</param>
         </member>
-        <member name="T:PhotoOrganizer.Core.ImageSorters.IDirectorySorter">
+        <member name="T:PhotoOrganizer.Core.IDirectorySorter">
             <summary>
             Image directory sorter interface.
             </summary>
         </member>
-        <member name="M:PhotoOrganizer.Core.ImageSorters.IDirectorySorter.SortDirectory(System.String,PhotoOrganizer.Core.Options)">
+        <member name="M:PhotoOrganizer.Core.IDirectorySorter.SortDirectory(System.String,PhotoOrganizer.Core.Options)">
             <summary>
             Sorts the images inside a directory.
             </summary>
@@ -86,6 +86,11 @@
         <member name="P:PhotoOrganizer.Core.Imaging.IImage.MimeType">
             <summary>
             Gets the MIME type of the image.
+            </summary>
+        </member>
+        <member name="P:PhotoOrganizer.Core.Imaging.IImage.CodecInfo">
+            <summary>
+            Gets the codec information (<see cref="T:System.Drawing.Imaging.ImageCodecInfo"/>).
             </summary>
         </member>
         <member name="M:PhotoOrganizer.Core.Imaging.IImage.Save(System.String,System.Drawing.Imaging.ImageCodecInfo,System.Drawing.Imaging.EncoderParameters)">
@@ -157,6 +162,17 @@
             Factory for the <see cref="T:PhotoOrganizer.Core.Imaging.IImage"/> instances.
             </summary>
             <seealso cref="T:PhotoOrganizer.Core.Imaging.IImageFactory" />
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageFactory.imageMetadataConverter">
+            <summary>
+            The <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataConverter"/> instance.
+            </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Imaging.ImageFactory.#ctor(PhotoOrganizer.Core.Imaging.IImageMetadataConverter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PhotoOrganizer.Core.Imaging.ImageFactory"/> class.
+            </summary>
+            <param name="imageMetadataParser">The image metadata parser.</param>
         </member>
         <member name="M:PhotoOrganizer.Core.Imaging.ImageFactory.OpenImage(System.String)">
             <summary>
@@ -296,9 +312,39 @@
             The <see cref="T:System.Drawing.Image"/> wrappee.
             </summary>
         </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.metadataConverter">
+            <summary>
+            The <see cref="T:PhotoOrganizer.Core.Imaging.IImageMetadataConverter"/> instance
+            </summary>
+        </member>
         <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.mimeTypeProvider">
             <summary>
-            The MIME type of the image.
+            The getter of the MIME type of the image.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.codecInfoProvider">
+            <summary>
+            The getter of the <see cref="T:System.Drawing.Imaging.ImageCodecInfo"/> of the image.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.orientationProvider">
+            <summary>
+            The getter of the image orientation.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.dateTimeTakenProvider">
+            <summary>
+            The getter of the date-time when the image was taken.
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.dateTimeDigitizedProvider">
+            <summary>
+            The getter of the date-time when the image was digitized
+            </summary>
+        </member>
+        <member name="F:PhotoOrganizer.Core.Imaging.ImageWrapper.dateTimeOriginalProvider">
+            <summary>
+            The getter of the original date-time of the image.
             </summary>
         </member>
         <member name="M:PhotoOrganizer.Core.Imaging.ImageWrapper.#ctor(System.Drawing.Image,PhotoOrganizer.Core.Imaging.IImageMetadataConverter)">
@@ -307,6 +353,16 @@
             </summary>
             <param name="wrappee">The <see cref="T:System.Drawing.Image"/> wrappee.</param>
             <param name="metadataParser"></param>
+        </member>
+        <member name="P:PhotoOrganizer.Core.Imaging.ImageWrapper.MimeType">
+            <summary>
+            Gets the image MIME type.
+            </summary>
+        </member>
+        <member name="P:PhotoOrganizer.Core.Imaging.ImageWrapper.CodecInfo">
+            <summary>
+            Gets the codec information (<see cref="T:System.Drawing.Imaging.ImageCodecInfo"/>).
+            </summary>
         </member>
         <member name="P:PhotoOrganizer.Core.Imaging.ImageWrapper.Orientation">
             <summary>
@@ -375,13 +431,6 @@
             The image rotator interface.
             </summary>
         </member>
-        <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.GetRotationParameters(System.String)">
-            <summary>
-            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
-            </summary>
-            <param name="imagePath">The image path.</param>
-            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
-        </member>
         <member name="M:PhotoOrganizer.Core.Manipulators.IImageRotator.GetRotationParameters(PhotoOrganizer.Core.Imaging.IImage)">
             <summary>
             Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
@@ -399,18 +448,16 @@
             The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.
             </summary>
         </member>
+        <member name="F:PhotoOrganizer.Core.Manipulators.ImageRotator.RotationMap">
+            <summary>
+            The image rotation map
+            </summary>
+        </member>
         <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.#ctor(PhotoOrganizer.Core.Imaging.IImageFactory)">
             <summary>
             Initializes a new instance of the <see cref="T:PhotoOrganizer.Core.Manipulators.ImageRotator"/> class.
             </summary>
             <param name="imageFactory">The instance of <see cref="T:PhotoOrganizer.Core.Imaging.IImageFactory"/>.</param>
-        </member>
-        <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.GetRotationParameters(System.String)">
-            <summary>
-            Gets image transformation <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the image rotation.
-            </summary>
-            <param name="imagePath">The image path.</param>
-            <returns>An array of <see cref="T:System.Drawing.Imaging.EncoderParameters"/> for the rotation of the image.</returns>
         </member>
         <member name="M:PhotoOrganizer.Core.Manipulators.ImageRotator.GetRotationParameters(PhotoOrganizer.Core.Imaging.IImage)">
             <summary>
@@ -432,6 +479,14 @@
             <summary>
             The imag-processing options.
             </summary>
+        </member>
+        <member name="M:PhotoOrganizer.Core.Options.#ctor(System.Boolean,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PhotoOrganizer.Core.Options"/> class.
+            </summary>
+            <param name="rotate">if set to <c>true</c> [rotate].</param>
+            <param name="imageExtensions">The image extensions.</param>
+            <param name="outputDirectory">The output directory.</param>
         </member>
         <member name="P:PhotoOrganizer.Core.Options.Rotate">
             <summary>
